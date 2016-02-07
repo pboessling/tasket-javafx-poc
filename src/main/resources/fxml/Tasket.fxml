@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.phib.tasket.MainController">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button fx:id="addButton" mnemonicParsing="false" onAction="#addTask" text="Add" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" />
+            <Button fx:id="moveUpButton" mnemonicParsing="false" text="Move up" />
+            <Button fx:id="moveDownButton" mnemonicParsing="false" text="Move down" />
+            <Button fx:id="markAsDoneButton" mnemonicParsing="false" text="Mark as done" />
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <ListView fx:id="tasksListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
