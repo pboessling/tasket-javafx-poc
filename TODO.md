@@ -4,7 +4,8 @@ TODO
 Tasks
 -----
 
-- Add static ListView, containing editable checkboxes.
+- Implement onAction() methods for buttons in toolbar.
+-- https://stackoverflow.com/questions/16153838/updating-tableview-row-appearance
 - Add entities + DB integration.
 - Add read from / write to DB functionality
 - ...

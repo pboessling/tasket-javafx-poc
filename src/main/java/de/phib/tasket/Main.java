@@ -4,10 +4,11 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.ToolBar;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -18,17 +19,20 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		ToolBar toolBar = new ToolBar(new Button("Add"), new Button("Delete"), new Button("Move up"),
+				new Button("Move down"), new Button("Mark as done"));
+
 		ObservableList<String> tasks = FXCollections.observableArrayList();
 		tasks.addAll("Task 1", "Task 2", "Task 3");
 
 		ListView<String> tasksListView = new ListView<>();
-		tasksListView.setCellFactory((param) -> {
-			return new TaskCell();
-		});
+		tasksListView.setCellFactory(TextFieldListCell.forListView());
+		tasksListView.setEditable(true);
 		tasksListView.setItems(tasks);
 
-		StackPane root = new StackPane();
-		root.getChildren().add(tasksListView);
+		BorderPane root = new BorderPane();
+		root.setTop(toolBar);
+		root.setCenter(tasksListView);
 
 		Scene scene = new Scene(root);
 
@@ -37,19 +41,4 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 
-	private static class TaskCell extends ListCell<String> {
-
-		private CheckBox checkbox = new CheckBox();
-
-		@Override
-		protected void updateItem(String item, boolean empty) {
-			super.updateItem(item, empty);
-
-			if (item != null && !empty) {
-				setText(item);
-				setGraphic(checkbox);
-			}
-		}
-
-	}
 }
