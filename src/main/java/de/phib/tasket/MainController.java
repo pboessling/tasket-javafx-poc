@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.cell.TextFieldListCell;
 
 public class MainController implements Initializable {
 
@@ -35,30 +34,25 @@ public class MainController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		tasksListView.setCellFactory(TextFieldListCell.forListView());
+		tasksListView.setCellFactory(DragableTextFieldListCell.forListView());
 		tasksListView.setEditable(true);
 		tasksListView.setItems(tasks);
+
 	}
 
 	@FXML
 	public void addTask() {
-		tasks.add(new String("New Task"));
+		int selectedIndex = tasksListView.getSelectionModel().getSelectedIndex();
+		if (selectedIndex < 0) {
+			selectedIndex = 0;
+		}
+		tasks.add(selectedIndex, "New Task");
 	}
 
 	@FXML
 	public void deleteTask() {
 		String itemToDelete = tasksListView.getSelectionModel().getSelectedItem();
 		tasks.remove(itemToDelete);
-	}
-
-	@FXML
-	public void moveUpTask() {
-		// TODO: Implement.
-	}
-
-	@FXML
-	public void moveDownTask() {
-		// TODO: Implement.
 	}
 
 	@FXML

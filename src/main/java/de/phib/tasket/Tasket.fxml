@@ -11,8 +11,6 @@
         <items>
           <Button fx:id="addButton" mnemonicParsing="false" onAction="#addTask" text="Add" />
             <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteTask" text="Delete" />
-            <Button fx:id="moveUpButton" mnemonicParsing="false" onAction="#moveUpTask" text="Move up" />
-            <Button fx:id="moveDownButton" mnemonicParsing="false" onAction="#moveDownTask" text="Move down" />
             <Button fx:id="markAsDoneButton" mnemonicParsing="false" onAction="#markAsDoneTask" text="Mark as done" />
         </items>
       </ToolBar>
