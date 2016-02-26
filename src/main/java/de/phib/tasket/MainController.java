@@ -45,4 +45,25 @@ public class MainController implements Initializable {
 		tasks.add(new String("New Task"));
 	}
 
+	@FXML
+	public void deleteTask() {
+		String itemToDelete = tasksListView.getSelectionModel().getSelectedItem();
+		tasks.remove(itemToDelete);
+	}
+
+	@FXML
+	public void moveUpTask() {
+		// TODO: Implement.
+	}
+
+	@FXML
+	public void moveDownTask() {
+		// TODO: Implement.
+	}
+
+	@FXML
+	public void markAsDoneTask() {
+		// TODO: Implement.
+	}
+
 }

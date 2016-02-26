@@ -10,10 +10,10 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
           <Button fx:id="addButton" mnemonicParsing="false" onAction="#addTask" text="Add" />
-            <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" />
-            <Button fx:id="moveUpButton" mnemonicParsing="false" text="Move up" />
-            <Button fx:id="moveDownButton" mnemonicParsing="false" text="Move down" />
-            <Button fx:id="markAsDoneButton" mnemonicParsing="false" text="Mark as done" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteTask" text="Delete" />
+            <Button fx:id="moveUpButton" mnemonicParsing="false" onAction="#moveUpTask" text="Move up" />
+            <Button fx:id="moveDownButton" mnemonicParsing="false" onAction="#moveDownTask" text="Move down" />
+            <Button fx:id="markAsDoneButton" mnemonicParsing="false" onAction="#markAsDoneTask" text="Mark as done" />
         </items>
       </ToolBar>
    </top>
