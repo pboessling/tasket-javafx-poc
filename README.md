@@ -3,7 +3,9 @@ Tasket
 
 A simple task management tool.
 
-Note
-----
+Features
+--------
 
-This tool is still WIP. Currently, you can add, delete and sort tasks. The tasks are *not* persisted into a DB yet. The "mark as done" button is not functional yet.
+Add, sort, and delete tasks. 
+
+The tasks are stored in an Apache Derby DB in the folder: `${user.home}/.tasket`.

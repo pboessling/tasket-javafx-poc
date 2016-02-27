@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import de.phib.tasket.persistence.Task;
+import de.phib.tasket.persistence.TaskService;
 import de.phib.tasket.ui.TaskListCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
-public class MainController implements Initializable {
+public class TaskViewController implements Initializable {
 
 	@FXML
 	private Button addButton;
@@ -34,27 +35,37 @@ public class MainController implements Initializable {
 
 	private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
+	private TaskService taskService;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		tasksListView.setCellFactory(TaskListCell.forListView2());
-		tasksListView.setEditable(true);
-		tasksListView.setItems(tasks);
+		this.taskService = new TaskService();
 
+		this.tasks.addAll((this.taskService.findAll()));
+
+		this.tasksListView.setCellFactory(TaskListCell.forListView2());
+		this.tasksListView.setEditable(true);
+		this.tasksListView.setItems(this.tasks);
 	}
 
 	@FXML
 	public void addTask() {
-		int selectedIndex = tasksListView.getSelectionModel().getSelectedIndex();
+		int selectedIndex = this.tasksListView.getSelectionModel().getSelectedIndex();
+
 		if (selectedIndex < 0) {
 			selectedIndex = 0;
 		}
-		tasks.add(selectedIndex, new Task("New Task"));
+
+		Task task = this.taskService.create("New Task");
+		this.tasks.add(selectedIndex, task);
 	}
 
 	@FXML
 	public void deleteTask() {
-		Task selectedItem = tasksListView.getSelectionModel().getSelectedItem();
-		tasks.remove(selectedItem);
+		Task task = this.tasksListView.getSelectionModel().getSelectedItem();
+
+		this.tasks.remove(task);
+		this.taskService.delete(task);
 	}
 
 	@FXML

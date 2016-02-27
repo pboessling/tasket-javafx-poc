@@ -1,5 +1,6 @@
 package de.phib.tasket;
 
+import de.phib.tasket.persistence.PersistenceUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,13 +15,19 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("Tasket.fxml"));
+		PersistenceUtil.setUp();
 
+		Parent root = FXMLLoader.load(getClass().getResource("Tasket.fxml"));
 		Scene scene = new Scene(root);
 
 		primaryStage.setTitle("Tasket");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+	}
+
+	@Override
+	public void stop() throws Exception {
+		PersistenceUtil.tearDown();
 	}
 
 }
