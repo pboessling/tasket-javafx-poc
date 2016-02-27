@@ -1,4 +1,4 @@
-package de.phib.tasket;
+package de.phib.tasket.ui;
 
 import java.util.ArrayList;
 import java.util.List;

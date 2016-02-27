@@ -3,6 +3,7 @@ package de.phib.tasket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import de.phib.tasket.ui.DragableTextFieldListCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -51,8 +52,8 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void deleteTask() {
-		String itemToDelete = tasksListView.getSelectionModel().getSelectedItem();
-		tasks.remove(itemToDelete);
+		String selectedItem = tasksListView.getSelectionModel().getSelectedItem();
+		tasks.remove(selectedItem);
 	}
 
 	@FXML
