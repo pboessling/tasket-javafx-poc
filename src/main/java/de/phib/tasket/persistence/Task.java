@@ -1,12 +1,16 @@
 package de.phib.tasket.persistence;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Task {
+public class Task implements Serializable {
+
+	private static final long serialVersionUID = 1475534033312498607L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +25,10 @@ public class Task {
 		this.title = title;
 	}
 
+	public int getTaskId() {
+		return this.taskId;
+	}
+
 	public String getTitle() {
 		return this.title;
 	}
@@ -30,7 +38,36 @@ public class Task {
 	}
 
 	@Override
+	public boolean equals(Object other) {
+		if (other == null) {
+			return false;
+		}
+		if (other == this) {
+			return true;
+		}
+		if (!(other instanceof Task)) {
+			return false;
+		}
+
+		Task otherTask = (Task) other;
+
+		return (otherTask.getTaskId() == this.getTaskId())
+				&& (otherTask.getTitle() != null && otherTask.getTitle().equals(this.getTitle()));
+	}
+
+	@Override
+	public int hashCode() {
+		int constant = 37;
+		int total = 17;
+
+		total = total * constant + (this.getTaskId() ^ (this.getTaskId() >> 32));
+		total = total * constant + this.getTitle().hashCode();
+
+		return total;
+	}
+
+	@Override
 	public String toString() {
-		return "Task [title=" + this.title + "]";
+		return "Task [taskId=" + taskId + ", title=" + this.title + "]";
 	}
 }

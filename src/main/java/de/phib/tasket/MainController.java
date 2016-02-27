@@ -3,7 +3,8 @@ package de.phib.tasket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import de.phib.tasket.ui.DragableTextFieldListCell;
+import de.phib.tasket.persistence.Task;
+import de.phib.tasket.ui.TaskListCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,13 +30,13 @@ public class MainController implements Initializable {
 	private Button markAsDoneButton;
 
 	@FXML
-	private ListView<String> tasksListView;
+	private ListView<Task> tasksListView;
 
-	private ObservableList<String> tasks = FXCollections.observableArrayList();
+	private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		tasksListView.setCellFactory(DragableTextFieldListCell.forListView());
+		tasksListView.setCellFactory(TaskListCell.forListView2());
 		tasksListView.setEditable(true);
 		tasksListView.setItems(tasks);
 
@@ -47,12 +48,12 @@ public class MainController implements Initializable {
 		if (selectedIndex < 0) {
 			selectedIndex = 0;
 		}
-		tasks.add(selectedIndex, "New Task");
+		tasks.add(selectedIndex, new Task("New Task"));
 	}
 
 	@FXML
 	public void deleteTask() {
-		String selectedItem = tasksListView.getSelectionModel().getSelectedItem();
+		Task selectedItem = tasksListView.getSelectionModel().getSelectedItem();
 		tasks.remove(selectedItem);
 	}
 

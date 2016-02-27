@@ -3,25 +3,28 @@ package de.phib.tasket.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.phib.tasket.persistence.Task;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
-import javafx.util.converter.DefaultStringConverter;
 
-public class DragableTextFieldListCell extends TextFieldListCell<String> {
+public class TaskListCell extends TextFieldListCell<Task> {
 
-	public DragableTextFieldListCell() {
+	private static final DataFormat DATA_FORMAT_TASK = new DataFormat("application/x-java-task");
+
+	public TaskListCell() {
 		this(null);
 	}
 
-	public DragableTextFieldListCell(StringConverter<String> converter) {
+	public TaskListCell(StringConverter<Task> converter) {
 		this.getStyleClass().add("text-field-list-cell");
 		setConverter(converter);
 
@@ -32,7 +35,8 @@ public class DragableTextFieldListCell extends TextFieldListCell<String> {
 
 			Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			ClipboardContent content = new ClipboardContent();
-			content.putString(getItem());
+			content.putString(getItem().getTitle());
+			content.put(DATA_FORMAT_TASK, getItem());
 			dragboard.setContent(content);
 
 			event.consume();
@@ -67,14 +71,15 @@ public class DragableTextFieldListCell extends TextFieldListCell<String> {
 			boolean success = false;
 
 			if (db.hasString()) {
-				ObservableList<String> items = getListView().getItems();
-				int draggedIdx = items.indexOf(db.getString());
+				ObservableList<Task> items = getListView().getItems();
+				Task draggedItem = (Task) db.getContent(DATA_FORMAT_TASK);
+				int draggedIdx = items.indexOf(draggedItem);
 				int thisIdx = items.indexOf(getItem());
 
 				items.set(draggedIdx, getItem());
-				items.set(thisIdx, db.getString());
+				items.set(thisIdx, draggedItem);
 
-				List<String> itemscopy = new ArrayList<>(getListView().getItems());
+				List<Task> itemscopy = new ArrayList<>(getListView().getItems());
 				getListView().getItems().setAll(itemscopy);
 
 				success = true;
@@ -87,8 +92,8 @@ public class DragableTextFieldListCell extends TextFieldListCell<String> {
 		setOnDragDone(DragEvent::consume);
 	}
 
-	public static Callback<ListView<String>, ListCell<String>> forListView() {
-		return list -> new DragableTextFieldListCell(new DefaultStringConverter());
+	public static Callback<ListView<Task>, ListCell<Task>> forListView2() {
+		return list -> new TaskListCell(new TaskStringConverter());
 	}
 
 }
