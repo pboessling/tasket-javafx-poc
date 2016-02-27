@@ -1,4 +1,4 @@
-package de.phib.tasket;
+package de.phib.tasket.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
-public class TaskViewController implements Initializable {
+public class TasketController implements Initializable {
 
 	@FXML
 	private Button addButton;

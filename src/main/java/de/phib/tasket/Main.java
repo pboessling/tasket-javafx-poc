@@ -17,7 +17,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		PersistenceUtil.setUp();
 
-		Parent root = FXMLLoader.load(getClass().getResource("Tasket.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/de/phib/tasket/controller/Tasket.fxml"));
 		Scene scene = new Scene(root);
 
 		primaryStage.setTitle("Tasket");
