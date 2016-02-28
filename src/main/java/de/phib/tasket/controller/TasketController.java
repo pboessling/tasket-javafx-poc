@@ -65,14 +65,15 @@ public class TasketController implements Initializable {
 
 	@FXML
 	public void addTask() {
+		int insertionIndex = this.tasks.size();
 		int selectedIndex = this.tasksListView.getSelectionModel().getSelectedIndex();
 
-		if (selectedIndex < 0) {
-			selectedIndex = 0;
+		if (selectedIndex > 0) {
+			insertionIndex = selectedIndex + 1;
 		}
 
 		Task task = this.taskService.create("New Task");
-		this.tasks.add(selectedIndex, task);
+		this.tasks.add(insertionIndex, task);
 	}
 
 	@FXML

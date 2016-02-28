@@ -5,6 +5,7 @@ Tasks
 -----
 
 - Store ordering (prioritization) of tasks in DB.
+- Add possibility to unselect item in listview.
 - Add "Mark as done" functionality.
 -- https://stackoverflow.com/questions/16153838/updating-tableview-row-appearance
 - Configure ]init[ code style settings.
