@@ -8,6 +8,7 @@ import de.phib.tasket.persistence.TaskService;
 import de.phib.tasket.ui.TaskListCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -46,6 +47,20 @@ public class TasketController implements Initializable {
 		this.tasksListView.setCellFactory(TaskListCell.forListView2());
 		this.tasksListView.setEditable(true);
 		this.tasksListView.setItems(this.tasks);
+
+		this.tasksListView.setOnEditCommit(new EventHandler<ListView.EditEvent<Task>>() {
+
+			@Override
+			public void handle(ListView.EditEvent<Task> event) {
+				int editIndex = event.getIndex();
+				Task currentTask = tasksListView.getItems().get(editIndex);
+
+				Task newTask = event.getNewValue();
+				currentTask.setTitle(newTask.getTitle());
+
+				taskService.update(currentTask);
+			}
+		});
 	}
 
 	@FXML

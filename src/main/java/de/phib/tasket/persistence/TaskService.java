@@ -25,6 +25,18 @@ public class TaskService {
 		return task;
 	}
 
+	public Task update(Task task) {
+		Task updatedTask = null;
+
+		if (task != null) {
+			entityManager.getTransaction().begin();
+			updatedTask = entityManager.merge(task);
+			entityManager.getTransaction().commit();
+		}
+
+		return updatedTask;
+	}
+
 	public void delete(Task task) {
 		if (task != null) {
 			entityManager.getTransaction().begin();

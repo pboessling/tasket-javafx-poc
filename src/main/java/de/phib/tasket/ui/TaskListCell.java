@@ -76,8 +76,8 @@ public class TaskListCell extends TextFieldListCell<Task> {
 				int draggedIdx = items.indexOf(draggedItem);
 				int thisIdx = items.indexOf(getItem());
 
-				items.set(draggedIdx, getItem());
-				items.set(thisIdx, draggedItem);
+				items.remove(draggedIdx);
+				items.add(thisIdx, draggedItem);
 
 				List<Task> itemscopy = new ArrayList<>(getListView().getItems());
 				getListView().getItems().setAll(itemscopy);
