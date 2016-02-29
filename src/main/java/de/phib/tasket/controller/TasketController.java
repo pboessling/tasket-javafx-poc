@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.text.Font;
 
 public class TasketController implements Initializable {
 
@@ -23,15 +24,6 @@ public class TasketController implements Initializable {
 	private Button deleteButton;
 
 	@FXML
-	private Button moveUpButton;
-
-	@FXML
-	private Button moveDownButton;
-
-	@FXML
-	private Button markAsDoneButton;
-
-	@FXML
 	private ListView<Task> tasksListView;
 
 	private ObservableList<Task> tasks = FXCollections.observableArrayList();
@@ -40,6 +32,11 @@ public class TasketController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		this.addButton.setFont(Font.font("FontAwesome"));
+		this.addButton.setText("\uf067");
+		this.deleteButton.setFont(Font.font("FontAwesome"));
+		this.deleteButton.setText("\uf068");
+
 		this.taskService = new TaskService();
 
 		this.tasks.addAll((this.taskService.findAll()));
@@ -82,11 +79,6 @@ public class TasketController implements Initializable {
 
 		this.tasks.remove(task);
 		this.taskService.delete(task);
-	}
-
-	@FXML
-	public void markAsDoneTask() {
-		// TODO: Implement.
 	}
 
 }

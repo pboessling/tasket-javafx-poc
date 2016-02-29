@@ -3,15 +3,21 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.phib.tasket.controller.TasketController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.phib.tasket.controller.TasketController">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <Button fx:id="addButton" mnemonicParsing="false" onAction="#addTask" text="Add" />
-            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteTask" text="Delete" />
-            <Button fx:id="markAsDoneButton" mnemonicParsing="false" onAction="#markAsDoneTask" text="Mark as done" />
+          <Button fx:id="addButton" mnemonicParsing="false" onAction="#addTask" text="Add">
+               <tooltip>
+                  <Tooltip text="Add task" />
+               </tooltip></Button>
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteTask" text="Delete">
+               <tooltip>
+                  <Tooltip text="Delete tasks" />
+               </tooltip></Button>
         </items>
       </ToolBar>
    </top>
