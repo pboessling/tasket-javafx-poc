@@ -16,7 +16,7 @@
                </tooltip></Button>
             <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteTask" text="Delete">
                <tooltip>
-                  <Tooltip text="Delete tasks" />
+                  <Tooltip text="Delete task" />
                </tooltip></Button>
         </items>
       </ToolBar>

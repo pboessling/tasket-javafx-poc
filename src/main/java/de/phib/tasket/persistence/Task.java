@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Task implements Serializable {
@@ -15,6 +16,9 @@ public class Task implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int taskId;
+
+	@ManyToOne
+	private Backlog backlog;
 
 	private String title;
 
@@ -27,6 +31,14 @@ public class Task implements Serializable {
 
 	public int getTaskId() {
 		return this.taskId;
+	}
+
+	public Backlog getBacklog() {
+		return this.backlog;
+	}
+
+	public void setBacklog(Backlog backlog) {
+		this.backlog = backlog;
 	}
 
 	public String getTitle() {
@@ -68,6 +80,6 @@ public class Task implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Task [taskId=" + taskId + ", title=" + this.title + "]";
+		return "Task [taskId=" + this.taskId + ", backlog=" + this.backlog + ", title=" + this.title + "]";
 	}
 }

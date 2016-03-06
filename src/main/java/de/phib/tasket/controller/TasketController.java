@@ -1,10 +1,12 @@
 package de.phib.tasket.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import de.phib.tasket.persistence.Backlog;
+import de.phib.tasket.persistence.BacklogService;
 import de.phib.tasket.persistence.Task;
-import de.phib.tasket.persistence.TaskService;
 import de.phib.tasket.ui.TaskListCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,22 +28,45 @@ public class TasketController implements Initializable {
 	@FXML
 	private ListView<Task> tasksListView;
 
+	private Backlog backlog;
+
 	private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
-	private TaskService taskService;
+	private BacklogService backlogService;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		initializeButtons();
+		initializeBacklog();
+		initializeListView();
+	}
+
+	private void initializeButtons() {
 		this.addButton.setFont(Font.font("FontAwesome"));
 		this.addButton.setText("\uf067");
 		this.deleteButton.setFont(Font.font("FontAwesome"));
 		this.deleteButton.setText("\uf068");
+	}
 
-		this.taskService = new TaskService();
+	private void initializeBacklog() {
+		this.backlogService = new BacklogService();
+		this.backlog = new Backlog();
 
-		this.tasks.addAll((this.taskService.findAll()));
+		List<Backlog> backlogs = this.backlogService.findAllBacklogs();
+		if (!backlogs.isEmpty()) {
+			this.backlog = backlogs.get(0);
+		} else {
+			this.backlog = this.backlogService.createBacklog("Backlog");
+		}
 
-		this.tasksListView.setCellFactory(TaskListCell.forListView2());
+		List<Task> backlogTasks = backlog.getTasks();
+		if (!backlogTasks.isEmpty()) {
+			this.tasks = FXCollections.observableList(backlogTasks);
+		}
+	}
+
+	private void initializeListView() {
+		this.tasksListView.setCellFactory(TaskListCell.forListView2(this.backlog));
 		this.tasksListView.setEditable(true);
 		this.tasksListView.setItems(this.tasks);
 
@@ -55,7 +80,7 @@ public class TasketController implements Initializable {
 				Task newTask = event.getNewValue();
 				currentTask.setTitle(newTask.getTitle());
 
-				taskService.update(currentTask);
+				TasketController.this.backlog = backlogService.updateBacklog(currentTask.getBacklog());
 			}
 		});
 	}
@@ -69,8 +94,10 @@ public class TasketController implements Initializable {
 			insertionIndex = selectedIndex + 1;
 		}
 
-		Task task = this.taskService.create("New Task");
+		Task task = new Task("New Task");
+		task.setBacklog(this.backlog);
 		this.tasks.add(insertionIndex, task);
+		this.backlog = this.backlogService.updateBacklog(this.backlog);
 	}
 
 	@FXML
@@ -78,7 +105,8 @@ public class TasketController implements Initializable {
 		Task task = this.tasksListView.getSelectionModel().getSelectedItem();
 
 		this.tasks.remove(task);
-		this.taskService.delete(task);
+		// TODO: Is it necessary to call task.setBacklog(null) first?
+		this.backlog = this.backlogService.updateBacklog(backlog);
 	}
 
 }

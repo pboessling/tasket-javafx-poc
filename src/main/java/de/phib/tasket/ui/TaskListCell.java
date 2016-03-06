@@ -1,8 +1,7 @@
 package de.phib.tasket.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import de.phib.tasket.persistence.Backlog;
+import de.phib.tasket.persistence.BacklogService;
 import de.phib.tasket.persistence.Task;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
@@ -20,12 +19,15 @@ public class TaskListCell extends TextFieldListCell<Task> {
 
 	private static final DataFormat DATA_FORMAT_TASK = new DataFormat("application/x-java-task");
 
+	private Backlog backlog;
+
 	public TaskListCell() {
-		this(null);
+		this(null, null);
 	}
 
-	public TaskListCell(StringConverter<Task> converter) {
+	public TaskListCell(StringConverter<Task> converter, Backlog backlog) {
 		this.getStyleClass().add("text-field-list-cell");
+		this.backlog = backlog;
 		setConverter(converter);
 
 		setOnDragDetected(event -> {
@@ -78,9 +80,8 @@ public class TaskListCell extends TextFieldListCell<Task> {
 
 				items.remove(draggedIdx);
 				items.add(thisIdx, draggedItem);
-
-				List<Task> itemscopy = new ArrayList<>(getListView().getItems());
-				getListView().getItems().setAll(itemscopy);
+				// TODO: Mixing UI and service layer seens to be a code smell.
+				new BacklogService().updateBacklog(this.backlog);
 
 				success = true;
 			}
@@ -92,8 +93,8 @@ public class TaskListCell extends TextFieldListCell<Task> {
 		setOnDragDone(DragEvent::consume);
 	}
 
-	public static Callback<ListView<Task>, ListCell<Task>> forListView2() {
-		return list -> new TaskListCell(new TaskStringConverter());
+	public static Callback<ListView<Task>, ListCell<Task>> forListView2(Backlog backlog) {
+		return list -> new TaskListCell(new TaskStringConverter(), backlog);
 	}
 
 }
